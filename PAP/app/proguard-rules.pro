@@ -17,22 +17,22 @@
 #}
 ## PAS TOUCHE AUX DATAWRAPPER DB
 -keepattributes InnerClasses
--keep class fr.jlm2017.pap.MongoDB.DataWrapperPortes** {*;}
--keep class fr.jlm2017.pap.MongoDB.DataWrapperMilitant** {*;}
--keep class fr.jlm2017.pap.MongoDB.Identifier {
+-keep class fr.Brainstorm.pap.MongoDB.DataWrapperPortes** {*;}
+-keep class fr.Brainstorm.pap.MongoDB.DataWrapperMilitant** {*;}
+-keep class fr.Brainstorm.pap.MongoDB.Identifier {
                                                  public private *;
                                              }
--keep class fr.jlm2017.pap.MongoDB.Porte {
+-keep class fr.Brainstorm.pap.MongoDB.Porte {
                                             public private *;
                                         }
--keep class fr.jlm2017.pap.MongoDB.Militant {
+-keep class fr.Brainstorm.pap.MongoDB.Militant {
                                                 public private *;
                                             }
 
 ## PAS TOUCHE AUX DATAWRAPPER GEO
 
--keep class fr.jlm2017.pap.GeoLocalisation.GeoData** {*;}
--keep class fr.jlm2017.pap.GeoLocalisation.GeoDataWrapper** {*;}
+-keep class fr.Brainstorm.pap.GeoLocalisation.GeoData** {*;}
+-keep class fr.Brainstorm.pap.GeoLocalisation.GeoDataWrapper** {*;}
 
 -dontwarn com.google.gson.**
 -dontwarn java.nio.file.**

@@ -18,7 +18,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
-import fr.Brainstorm.pap.utils.ButtonAnimationJLM;
+import fr.Brainstorm.pap.utils.ButtonAnimationBrain;
 import fr.Brainstorm.pap.utils.Encoder;
 import fr.Brainstorm.pap.MongoDB.Militant;
 import fr.Brainstorm.pap.MongoDB.DataObject;
@@ -33,7 +33,7 @@ import fr.Brainstorm.pap.R;
 public class ajoutMilitantTab extends Fragment {
 
     CircularProgressButton mAddMilit;
-    ButtonAnimationJLM mAddMilitAnimation;
+    ButtonAnimationBrain mAddMilitAnimation;
     TextView mPwdBase;
     EditText mEmail;
     CheckBox mIsAdmin;
@@ -44,12 +44,12 @@ public class ajoutMilitantTab extends Fragment {
         View rootView = inflater.inflate(R.layout.tab_admin_1, container, false);
 
         mAddMilit = (CircularProgressButton) rootView.findViewById(R.id.addUser);
-        mAddMilitAnimation = new ButtonAnimationJLM(mAddMilit);
+        mAddMilitAnimation = new ButtonAnimationBrain(mAddMilit);
         mEmail = (EditText) rootView.findViewById(R.id.emailNewMilitant);
         mIsAdmin = (CheckBox) rootView.findViewById(R.id.isAdmin);
         mPwdBase = (TextView)  rootView.findViewById(R.id.pwdBase);
 
-        mPwdBase.setText("Initial password for all accounts : "+ R.string.basePWD);
+        mPwdBase.setText("Initial password for all accounts : "+ getResources().getString(R.string.basePWD));
         mAddMilit.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {

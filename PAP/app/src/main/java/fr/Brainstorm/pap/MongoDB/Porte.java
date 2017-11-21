@@ -1,4 +1,4 @@
-package fr.jlm2017.pap.MongoDB;
+package fr.Brainstorm.pap.MongoDB;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -33,18 +33,18 @@ public class Porte extends DataObject implements Parcelable {
         this.user_id = user_id;
     }
 
-    public Porte(DataWrapperPortes.BigDataPorte big) {
+    public Porte(DataWrapperPortes.BigPorte big) {
         this.id_=big._id.$oid;
-        this.adresseResume = big.porte.adresseResume;
-        this.numS = big.porte.numS;
-        this.numA = big.porte.numA;
-        this.complement = big.porte.complement;
-        this.nom_rue = big.porte.nom_rue;
-        this.nom_ville = big.porte.nom_ville;
-        this.ouverte = big.porte.ouverte;
-        this.latitude = big.porte.latitude;
-        this.longitude = big.porte.longitude;
-        this.user_id = big.porte.user_id;
+        this.adresseResume = big.adresseResume;
+        this.numS = big.numS;
+        this.numA = big.numA;
+        this.complement = big.complement;
+        this.nom_rue = big.nom_rue;
+        this.nom_ville = big.nom_ville;
+        this.ouverte = big.ouverte;
+        this.latitude = big.location.coordinates.get(1);
+        this.longitude = big.location.coordinates.get(0);
+        this.user_id = big.person;
     }
 
     @Override

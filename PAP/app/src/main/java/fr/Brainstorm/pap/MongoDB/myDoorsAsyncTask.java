@@ -1,4 +1,4 @@
-package fr.jlm2017.pap.MongoDB;
+package fr.Brainstorm.pap.MongoDB;
 
 import android.os.AsyncTask;
 import android.util.Pair;
@@ -12,35 +12,36 @@ import okhttp3.Response;
 
 /**
  * Created by thoma on 15/03/2017.
- * Project : Porte à Porte pour JLM2017
+ * Project : Porte à Porte pour Brainstorm
  */
 
-public abstract class myDoorsAsyncTask extends AsyncTask<Pair<String,String>, Void, Pair<ArrayList<Porte>, Boolean>> implements InterfaceReceivedData<Pair<ArrayList<Porte>, Boolean>> {
+public abstract class myDoorsAsyncTask extends AsyncTask<String, Void, Pair<ArrayList<Porte>, Boolean>> implements InterfaceReceivedData<Pair<ArrayList<Porte>, Boolean>> {
 
     public OkHttpClient client;
 
     @Override
-    protected final Pair<ArrayList<Porte>, Boolean> doInBackground(Pair<String,String>... arg0) {
+    protected final Pair<ArrayList<Porte>, Boolean> doInBackground(String... arg0) {
 
-        Pair<String,String> args = arg0[0];
-        String token = args.second;
+        String args = arg0[0];
         QueryBuilder qb = new QueryBuilder();
-        // request with Token
         client = new OkHttpClient();
         Pair<String, Boolean> response = Pair.create("",false);
         try {
-            String URL = qb.buildGetMyPorteURL(args.first);
-            response = getFromDB(URL,token);
+            String URL = qb.buildGetMyPorteURL("portes", args );
+            System.out.println("inputed URL : "+ URL);
+            response = getFromDB(URL);
+            System.out.println("and response ("+ response.second+ ") : "+ response.first);
         } catch (IOException e) {
             e.printStackTrace();
         }
         assert response != null;
         Pair<ArrayList<Porte>, Boolean> result = Pair.create(new ArrayList<Porte>(),response.second);
         if(response.second) {
+            System.out.println("portes récupérées : "+ response.first);
             String updatedJson = "{\"data\" : " + response.first + "}";
 
             DataWrapperPortes dataWrapper = DataWrapperPortes.fromJson(updatedJson);
-            for (DataWrapperPortes.BigDataPorte big : dataWrapper.data) {
+            for (DataWrapperPortes.BigPorte big : dataWrapper.data) {
                 result.first.add(new Porte(big));
             }
 
@@ -50,9 +51,8 @@ public abstract class myDoorsAsyncTask extends AsyncTask<Pair<String,String>, Vo
 
     }
 
-    private Pair<String, Boolean> getFromDB(String url, String token) throws IOException {
+    private Pair<String, Boolean> getFromDB(String url) throws IOException {
         Request request = new Request.Builder()
-                .header("Authorization",  "Bearer " + token)
                 .url(url)
                 .build();
         try (Response response = client.newCall(request).execute()) {

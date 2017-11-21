@@ -1,8 +1,8 @@
-package fr.jlm2017.pap.MongoDB;
+package fr.Brainstorm.pap.MongoDB;
 
 /**
  * Created by thoma on 24/02/2017.
- * Project : Porte à Porte pour JLM2017
+ * Project : Porte à Porte pour Brainstorm
  */
 
 public interface InterfaceReceivedData<T> {

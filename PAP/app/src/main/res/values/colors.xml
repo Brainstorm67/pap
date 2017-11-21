@@ -3,9 +3,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="JLMblue">#0097B5</color>
-    <color name="JLMgreen">#13BE00</color>
-    <color name="JLMred">#C8462C</color>
+    <color name="Brainblue">#0097B5</color>
+    <color name="Braingreen">#13BE00</color>
+    <color name="Brainred">#C8462C</color>
+    <color name="Brainyellow">#fff131</color>
     <color name="black_overlay">#66000000</color>
     <color name="white">#FFFFFF</color>
 

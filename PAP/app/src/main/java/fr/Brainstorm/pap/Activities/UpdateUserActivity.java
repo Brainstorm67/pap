@@ -48,7 +48,7 @@ public class UpdateUserActivity extends AppCompatActivity {
         mPassword = (EditText) findViewById(R.id.passwordUpdate);
         mAdmin = (CheckedTextView) findViewById(R.id.isAdminUpdate);
         mSave = (CircularProgressButton) findViewById(R.id.SaveUpdate);
-        mSaveAnimation = new ButtonAnimationJLM(mSave);
+        mSaveAnimation = new ButtonAnimationBrain(mSave);
         mCancel = (Button) findViewById(R.id.cancelUpdate);
         Intent origin = getIntent();
         user = origin.getParcelableExtra("USER_EXTRA");
@@ -146,7 +146,7 @@ public class UpdateUserActivity extends AppCompatActivity {
     }
 
     private void clickedNext() {
-        UpdateAsyncTask tsk = new UpdateAsyncTask() {
+        @SuppressLint("StaticFieldLeak") UpdateAsyncTask tsk = new UpdateAsyncTask() {
             @Override
             public void onResponseReceived(Boolean finished) {
                 if(finished ) {

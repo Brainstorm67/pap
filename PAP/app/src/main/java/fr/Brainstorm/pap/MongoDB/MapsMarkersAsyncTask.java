@@ -1,4 +1,4 @@
-package fr.jlm2017.pap.MongoDB;
+package fr.Brainstorm.pap.MongoDB;
 
 import android.os.AsyncTask;
 import android.util.Pair;
@@ -12,25 +12,26 @@ import okhttp3.Response;
 
 /**
  * Created by thoma on 15/03/2017.
- * Project : Porte à Porte pour JLM2017
+ * Project : Porte à Porte pour Brainstorm
  */
 
-public abstract class MapsMarkersAsyncTask extends AsyncTask<Pair<Pair<Double,Double>,String>, Void, Pair<ArrayList<Porte>, Boolean>> implements InterfaceReceivedData<Pair<ArrayList<Porte>, Boolean>> {
+public abstract class MapsMarkersAsyncTask extends AsyncTask<Pair<Double,Double>, Void, Pair<ArrayList<Porte>, Boolean>> implements InterfaceReceivedData<Pair<ArrayList<Porte>, Boolean>> {
 
     public OkHttpClient client;
 
     @Override
-    protected final Pair<ArrayList<Porte>, Boolean> doInBackground(Pair<Pair<Double,Double>,String>... arg0) {
+    protected final Pair<ArrayList<Porte>, Boolean> doInBackground(Pair<Double,Double>... arg0) {
 
-        Pair<Pair<Double,Double>,String> args = arg0[0];
-        String token = args.second;
+        Pair<Double,Double> args = arg0[0];
         QueryBuilder qb = new QueryBuilder();
         // request with Token
         client = new OkHttpClient();
         Pair<String, Boolean> response = Pair.create("",false);
         try {
-            String URL = qb.buildProcheURL(args.first);
-            response = getFromDB(URL,token);
+            String URL = qb.buildProcheURL(args);
+            System.out.println("inputed URL : "+ URL);
+            response = getFromDB(URL);
+            System.out.println("and response ("+ response.second+ ") : "+ response.first);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -40,7 +41,7 @@ public abstract class MapsMarkersAsyncTask extends AsyncTask<Pair<Pair<Double,Do
             String updatedJson = "{\"data\" : " + response.first + "}";
 
             DataWrapperPortes dataWrapper = DataWrapperPortes.fromJson(updatedJson);
-            for (DataWrapperPortes.BigDataPorte big : dataWrapper.data) {
+            for (DataWrapperPortes.BigPorte big : dataWrapper.data) {
                 result.first.add(new Porte(big));
             }
 
@@ -50,7 +51,7 @@ public abstract class MapsMarkersAsyncTask extends AsyncTask<Pair<Pair<Double,Do
 
     }
 
-    private Pair<String, Boolean> getFromDB(String url, String token) throws IOException {
+    private Pair<String, Boolean> getFromDB(String url) throws IOException {
         Request request = new Request.Builder()
                 .url(url)
                 .build();

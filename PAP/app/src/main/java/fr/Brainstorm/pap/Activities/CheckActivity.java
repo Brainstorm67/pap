@@ -47,7 +47,7 @@ import fr.Brainstorm.pap.GeoLocalisation.GetReverseLoc;
 import fr.Brainstorm.pap.MongoDB.SaveAsyncTask;
 import fr.Brainstorm.pap.MongoDB.Porte;
 import fr.Brainstorm.pap.R;
-import fr.Brainstorm.pap.utils.ButtonAnimationJLM;
+import fr.Brainstorm.pap.utils.ButtonAnimationBrain;
 import fr.Brainstorm.pap.MongoDB.Militant;
 
 import static android.content.Context.LOCATION_SERVICE;
@@ -68,7 +68,7 @@ public class CheckActivity extends Fragment {
 
     //views variables
     private ImageButton menuImage;
-    private ButtonAnimationJLM mAddDoorAnimation, mGPSAnimation;
+    private ButtonAnimationBrain mAddDoorAnimation, mGPSAnimation;
     private CircularProgressButton mAddDoor, mGPS;
     private EditText mAdress, mNumS, mNumA, mCity, mComplement;
     private TextInputLayout appartLayout;
@@ -123,9 +123,9 @@ public class CheckActivity extends Fragment {
         timing = getResources().getInteger(R.integer.decontracting_time_animation);
         //widgets
         mAddDoor = (CircularProgressButton) rootView.findViewById(R.id.AddDoor);
-        mAddDoorAnimation = new ButtonAnimationJLM(mAddDoor);
+        mAddDoorAnimation = new ButtonAnimationBrain(mAddDoor);
         mGPS = (CircularProgressButton) rootView.findViewById(R.id.GPSButton);
-        mGPSAnimation = new ButtonAnimationJLM(mGPS);
+        mGPSAnimation = new ButtonAnimationBrain(mGPS);
         mAdress = (EditText) rootView.findViewById(R.id.Adress);
         mNumA = (EditText) rootView.findViewById(R.id.DoorNum);
         appartLayout = (TextInputLayout) rootView.findViewById(R.id.DoorNumLayout) ;
@@ -164,10 +164,29 @@ public class CheckActivity extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //if(user.pseudo.equals("")) dialogFirstConnection();
+        if(user.pseudo.equals("")) dialogFirstConnection();
         initValues();
         resetUI();
         checkGPS.setChecked(false);
+    }
+
+    private void dialogFirstConnection() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(R.string.dialog_first_connection)
+                .setTitle("Première connexion");
+        builder.setCancelable(false);
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked OK button
+                Intent goUpdate = new Intent(getActivity(), UpdateUserActivity.class);
+                goUpdate.putExtra("USER_EXTRA", user);
+                goUpdate.putExtra("USER_FIRST",true);
+                getActivity().startActivityForResult(goUpdate,USER_CHANGED_CODE);
+            }
+        });
+        AlertDialog box = builder.create();
+        box.show();
     }
 
     // MAIN USE
@@ -192,7 +211,7 @@ public class CheckActivity extends Fragment {
 
                                 //création de la porte et envoi dans la base
                                 if (!checkGPS.isChecked()) {
-                                    GetForwardLoc geolocForward = new GetForwardLoc() {
+                                    @SuppressLint("StaticFieldLeak") GetForwardLoc geolocForward = new GetForwardLoc() {
                                         @Override
                                         public void onResponseReceived(Pair<ArrayList<GeoData>, Boolean> result) {
                                             validationPorteGPS(this,result);
@@ -444,8 +463,8 @@ public class CheckActivity extends Fragment {
                     if(mGPS.isClickable()) {
                         latitude = location.getLatitude();
                         longitude = location.getLongitude();
-                        String message = "Position récupérée : " + latitude + " ; " + longitude;
-                        showToast(message);
+//                        String message = "Position récupérée : " + latitude + " ; " + longitude;
+//                        showToast(message);
                         if (!positionPrecise) {
                             positionPrecise = true;
                             setEnabledButton(mGPS, R.string.gps_use_precise, R.drawable.button_green_shape_default_rounded, true);

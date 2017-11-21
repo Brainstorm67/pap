@@ -1,4 +1,4 @@
-package fr.jlm2017.pap.utils;
+package fr.Brainstorm.pap.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -19,11 +19,11 @@ import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 
-import fr.jlm2017.pap.R;
+import fr.Brainstorm.pap.R;
 
 /**
  * Created by thoma on 16/03/2017.
- * Project : Porte à Porte pour JLM2017
+ * Project : Porte à Porte pour Brainstorm
  */
 
 public class MyMarkerRenderer extends DefaultClusterRenderer<MyMapMarker> {
@@ -36,14 +36,14 @@ public class MyMarkerRenderer extends DefaultClusterRenderer<MyMapMarker> {
         super(context, map, clusterManager);
         myContext = context;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            GREEN = context.getResources().getColor(R.color.JLMgreen,null);
-            RED = context.getResources().getColor(R.color.JLMred,null);
-            YELLOW = context.getResources().getColor(R.color.JLMyellow,null);
+            GREEN = context.getResources().getColor(R.color.Braingreen,null);
+            RED = context.getResources().getColor(R.color.Brainred,null);
+            YELLOW = context.getResources().getColor(R.color.Brainyellow,null);
         }
         else {
-            GREEN = context.getResources().getColor(R.color.JLMgreen);
-            RED = context.getResources().getColor(R.color.JLMred);
-            YELLOW = context.getResources().getColor(R.color.JLMyellow);
+            GREEN = context.getResources().getColor(R.color.Braingreen);
+            RED = context.getResources().getColor(R.color.Brainred);
+            YELLOW = context.getResources().getColor(R.color.Brainyellow);
         }
     }
 

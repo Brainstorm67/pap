@@ -1,4 +1,4 @@
-package fr.jlm2017.pap.MongoDB;
+package fr.Brainstorm.pap.MongoDB;
 
 /**
  * Created by thoma on 14/02/2017.

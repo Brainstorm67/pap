@@ -1,6 +1,7 @@
 package fr.Brainstorm.pap.Activities;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -38,7 +39,7 @@ import fr.Brainstorm.pap.MongoDB.MapsMarkersAsyncTask;
 import fr.Brainstorm.pap.MongoDB.Porte;
 import fr.Brainstorm.pap.MongoDB.myDoorsAsyncTask;
 import fr.Brainstorm.pap.R;
-import fr.Brainstorm.pap.utils.ButtonAnimationJLM;
+import fr.Brainstorm.pap.utils.ButtonAnimationBrain;
 import fr.Brainstorm.pap.utils.MyMapMarker;
 import fr.Brainstorm.pap.utils.MyMarkerRenderer;
 
@@ -47,14 +48,14 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback {
     private GoogleMap mMap;
     private ArrayList<MyMapMarker> markersClose,markersUser;
     private double latitudeCam, longitudeCam;
-    private String app_token, user_id;
+    private String user_id;
     private boolean rdy=false;
     private float zoomMax, zoomFR, zoom;
     private int nb_doors_user = 0,timing;
     private TextView number;
     private ClusterManager<MyMapMarker> mClusterManager;
     private CircularProgressButton mRefresh;
-    private ButtonAnimationJLM mRefreshAnimation;
+    private ButtonAnimationBrain mRefreshAnimation;
     private Handler handler;
 
 
@@ -64,13 +65,12 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback {
         View rootView = inflater.inflate(R.layout.tab_map, container, false);
         //Animations tools for refresh Button
         mRefresh = (CircularProgressButton) rootView.findViewById(R.id.refresh_button);
-        mRefreshAnimation = new ButtonAnimationJLM(mRefresh);
+        mRefreshAnimation = new ButtonAnimationBrain(mRefresh);
         mRefresh.setVisibility(View.INVISIBLE);
         mRefresh.setEnabled(false);
         handler = new Handler();
         timing = getResources().getInteger(R.integer.decontracting_time_animation);
         //ids
-        app_token=((Main) getActivity()).app_token;
         user_id=((Main) getActivity()).user_id;
         //markers
         markersClose = new ArrayList<>();
@@ -80,7 +80,7 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback {
         zoomFR = 5.0f;
         zoomMax=19.0f ;
         nb_doors_user=0;
-        zoom =zoomFR;
+        zoom =15.0f;
         rdy=false;
         number = (TextView) rootView.findViewById(R.id.user_doors);
         UpdateMarkarListUser();
@@ -156,7 +156,7 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback {
         for(MyMapMarker m : markersUser) {
             mClusterManager.addItem(m);
         }
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitudeCam, longitudeCam),zoom));//on se place au centre de la France
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitudeCam, longitudeCam),zoomFR));//on se place au centre de la France
     }
 
     private void setUpClusterer() {
@@ -202,7 +202,6 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback {
         });
         // Point the map's listeners at the listeners implemented by the cluster
         // manager.
-
         mMap.setOnCameraIdleListener(mClusterManager);
         mMap.setOnMarkerClickListener(mClusterManager);
 
@@ -217,7 +216,7 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback {
         EmptyMarkers(markersClose);
         mRefresh.startAnimation();
 
-        MapsMarkersAsyncTask tsk = new MapsMarkersAsyncTask() {
+        @SuppressLint("StaticFieldLeak") MapsMarkersAsyncTask tsk = new MapsMarkersAsyncTask() {
             @Override
             public void onResponseReceived(final Pair<ArrayList<Porte>, Boolean> result) {
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitudeCam, longitudeCam),zoom));
@@ -229,6 +228,7 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback {
                             for(Porte p : result.first) {
                                 if(!p.user_id.equals(user_id)) addMarker(p);
                             }
+                            mClusterManager.cluster();
                             mRefresh.setText(getResources().getString(R.string.maj_proches));
                         }
                     }, timing);
@@ -248,7 +248,7 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback {
                 }
             }
         };
-        tsk.execute(Pair.create(Pair.create(lat,lng),app_token));
+        tsk.execute(Pair.create(lat,lng));
     }
 
     private void EmptyMarkers(ArrayList<MyMapMarker> markersClos) {
@@ -260,10 +260,10 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback {
         markersClos.clear();
     }
 
-    public void UpdateMarkarListUser () {
+    public void UpdateMarkarListUser () { // à l'activation du GPS on rajoute le sportes proches
         nb_doors_user=0;
         EmptyMarkers(markersUser);
-        myDoorsAsyncTask tskuser = new myDoorsAsyncTask() {
+        @SuppressLint("StaticFieldLeak") myDoorsAsyncTask tskuser = new myDoorsAsyncTask() {
             @Override
             public void onResponseReceived(Pair<ArrayList<Porte>, Boolean> result) {
                 if(result.second) {
@@ -271,6 +271,7 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback {
                         addUserMarker(p);
                         nb_doors_user++;
                     }
+                    mClusterManager.cluster();
                     number.setText(String.valueOf(nb_doors_user));
                 }
                 else {
@@ -279,7 +280,7 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback {
                 }
             }
         };
-        tskuser.execute(Pair.create(user_id,app_token));
+        tskuser.execute(user_id);
     }
 
     private void addMarker(Porte p) {
@@ -310,10 +311,9 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback {
                 Porte port  = intent.getParcelableExtra("DATA_EXTRA");
                 addUserMarker(port);
                 nb_doors_user++;
+                mClusterManager.cluster();
                 number.setText(String.valueOf(nb_doors_user));
                 UpdateMarkarList(port.latitude,port.longitude,zoomMax);
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(port.latitude, port.longitude),zoom));
-//                //System.out.println("ID caché : "+mili.id_);
             }
             if ("DATA_MAJ".equals(intent.getAction()))
             {
@@ -326,7 +326,6 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback {
                         mMap.setMyLocationEnabled(true);
                     }
                 }
-//                //System.out.println("ID caché : "+mili.id_);
             }
         }
     };
@@ -381,11 +380,11 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback {
                 holder = (ViewHolder)convertView.getTag();
             }
 
-            // Dans tous les cas, on récupère le contact téléphonique concerné
+            // Dans tous les cas, on récupère le marker concerné
             MyMapMarker c = (MyMapMarker)getItem(i);
             // Si cet élément existe vraiment…
             if(c != null) {
-                // On place dans le holder les informations sur le contact
+                // On place dans le holder les informations sur le marker
                 holder.mNom.setText(c.getTitle());
                 holder.mImg.setImageBitmap(c.getClusteredIcon());
             }

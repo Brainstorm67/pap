@@ -1,10 +1,10 @@
-package fr.jlm2017.pap.GeoLocalisation;
+package fr.Brainstorm.pap.GeoLocalisation;
 
-import fr.jlm2017.pap.utils.Encoder;
+import fr.Brainstorm.pap.utils.Encoder;
 
 /**
  * Created by thoma on 23/02/2017.
- * Project : Porte à Porte pour JLM2017
+ * Project : Porte à Porte pour Brainstorm
  */
 
 
@@ -12,7 +12,7 @@ public class GeoDecoder {
 
     private String baseURL = "https://api.opencagedata.com/geocode/v1/json?q=";
     private String optionsNokey = "&pretty=1&no_record=1&min_confidence=9&no_annotations=1&key=";
-    private String key = "OWFTFxbFeu9-lrMEHYvOFlB36ZoTuZ9E3nySC5JjAITUOKiHqMSSig==";
+    private String key = "Ql4qtaHr5tH4X2o_UrvcFKz5LvZCRlHDURtBN3anWGmqt_2ip8sXzg==";
     private String options = optionsNokey + Encoder.decodeString(key);
     private String option_FR = "&countrycode=fr,bl,gf,gp,mf,mq,nc,pf,pm,re,tf,wf,yt";
     public boolean fr;

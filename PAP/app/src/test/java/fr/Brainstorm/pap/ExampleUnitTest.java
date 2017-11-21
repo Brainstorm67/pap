@@ -1,4 +1,4 @@
-package fr.jlm2017.pap;
+package fr.Brainstorm.pap;
 
 import org.junit.Test;
 

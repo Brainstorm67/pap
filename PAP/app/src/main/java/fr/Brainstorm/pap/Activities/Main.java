@@ -1,4 +1,4 @@
-package fr.jlm2017.pap.Activities;
+package fr.Brainstorm.pap.Activities;
 
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -14,7 +14,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 
-import fr.jlm2017.pap.R;
+import fr.Brainstorm.pap.MongoDB.Militant;
+import fr.Brainstorm.pap.R;
 
 public class Main extends AppCompatActivity {
     /**
@@ -31,7 +32,7 @@ public class Main extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-    public String app_token, user_id;
+    public String  user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +51,7 @@ public class Main extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-        app_token = getIntent().getStringExtra("APP_TOKEN");
-        user_id = getIntent().getStringExtra("USER_ID");
+        user_id = ((Militant)getIntent().getParcelableExtra("USER_EXTRA")).id_;
 
     }
 

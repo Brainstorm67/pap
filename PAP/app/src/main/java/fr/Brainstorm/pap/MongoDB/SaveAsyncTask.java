@@ -1,4 +1,4 @@
-package fr.jlm2017.pap.MongoDB;
+package fr.Brainstorm.pap.MongoDB;
 
 /**
  * Created by thoma on 14/02/2017.
@@ -34,7 +34,9 @@ public abstract class SaveAsyncTask extends AsyncTask<DataObject, Void, Pair<Str
         Pair<String, Boolean> result =new Pair<>("",false);
         try {
             String URL = qb.buildObjectsSaveURL(contact);
+            //System.out.println("inputed JSON : " + json + "\n and URL : "+ URL);
             result = post(URL,json);
+            //System.out.println("and response ("+ result.second+ ") : "+ result.first);
         } catch (IOException e) {
             e.printStackTrace();
         }

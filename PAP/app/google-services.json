@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:383234010204:android:23f5f2a09fc3c4c2",
         "android_client_info": {
-          "package_name": "fr.jlm2017.pap"
+          "package_name": "fr.Brainstorm.pap"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "383234010204-m94cife8g5eol7lqlboc0urf6i153m0l.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "fr.jlm2017.pap",
+            "package_name": "fr.Brainstorm.pap",
             "certificate_hash": "E1F1EB80E5C08B505AF5618BA9A7AE43EB27F1C8"
           }
         },

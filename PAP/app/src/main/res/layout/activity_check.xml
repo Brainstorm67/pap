@@ -5,7 +5,7 @@
     android:id="@+id/activity_check"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fr.jlm2017.pap.Activities.Check">
+    tools:context="fr.Brainstorm.pap.Activities.Check">
 
     <LinearLayout
         android:orientation="vertical"

@@ -28,7 +28,7 @@ import android.util.Pair;
 import android.widget.Toast;
 
 import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
-import fr.Brainstorm.pap.utils.ButtonAnimationJLM;
+import fr.Brainstorm.pap.utils.ButtonAnimationBrain;
 import fr.Brainstorm.pap.utils.Encoder;
 import fr.Brainstorm.pap.MongoDB.Militant;
 import fr.Brainstorm.pap.MongoDB.DataObject;
@@ -41,7 +41,7 @@ import fr.Brainstorm.pap.R;
  */
 public class LoginActivity extends AppCompatActivity {
 
-    public static boolean installed = false;
+    public static boolean installed = false; //TODO check this
     //animation tools 1/////////////////////////
     private Handler handler ;
     private int timing ;
@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
-    private ButtonAnimationJLM mEmailSignInButtonAnimated;
+    private ButtonAnimationBrain mEmailSignInButtonAnimated;
     private static int USER_LOG_OUT = 1002;
 
     private void setupWindowAnimations() { //TODO animations de transition
@@ -77,6 +77,7 @@ public class LoginActivity extends AppCompatActivity {
         setupWindowAnimations();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        //System.out.println("apikey codée :" + Encoder.codeString("5dc3a9d538a64ddca4a46ab5c3d9cdfd"));
         handler = new Handler();
         timing = getResources().getInteger(R.integer.decontracting_time_animation);
         // Set up the login form.
@@ -102,8 +103,9 @@ public class LoginActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-        mEmailSignInButtonAnimated = new ButtonAnimationJLM((CircularProgressButton) findViewById(R.id.email_sign_in_button));
+        mEmailView.setText("test@test"); //TODO Remove those 2 lines before produce
+        mPasswordView.setText("ajout");
+        mEmailSignInButtonAnimated = new ButtonAnimationBrain((CircularProgressButton) findViewById(R.id.email_sign_in_button));
         mEmailSignInButtonAnimated.button.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {

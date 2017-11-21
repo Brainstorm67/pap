@@ -1,4 +1,4 @@
-package fr.jlm2017.pap.MongoDB;
+package fr.Brainstorm.pap.MongoDB;
 
 /**
  * Created by thoma on 14/02/2017.
@@ -57,8 +57,8 @@ public abstract class GetAsyncTask extends AsyncTask<Pair<String,ArrayList<Pair<
             }
             else {
                 DataWrapperPortes dataWrapper = DataWrapperPortes.fromJson(updatedJson);
-                for (DataWrapperPortes.BigDataPorte big : dataWrapper.data) {
-                    objectsGet.add(big.porte);
+                for (DataWrapperPortes.BigPorte big : dataWrapper.data) {
+                    objectsGet.add(new Porte(big));
                 }
             }
 

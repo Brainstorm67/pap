@@ -1,4 +1,4 @@
-package fr.jlm2017.pap.GeoLocalisation;
+package fr.Brainstorm.pap.GeoLocalisation;
 
 /**
  * Created by thoma on 14/02/2017.
@@ -10,7 +10,7 @@ import android.util.Pair;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import fr.jlm2017.pap.MongoDB.InterfaceReceivedData;
+import fr.Brainstorm.pap.MongoDB.InterfaceReceivedData;
 import kotlin.Triple;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

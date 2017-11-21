@@ -5,17 +5,16 @@
     android:id="@+id/activity_splash_screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fr.jlm2017.pap.Activities.SplashScreen"
+    tools:context="fr.Brainstorm.pap.Activities.SplashScreen"
     android:background="@color/white">
 
     <ImageView
+        android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/logo_phi"
-        android:id="@+id/imageView3"
-        android:layout_above="@+id/MegaTitre"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="10dp" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@mipmap/logo_phi" />
 
     <TextView
         android:text="@string/app_version"

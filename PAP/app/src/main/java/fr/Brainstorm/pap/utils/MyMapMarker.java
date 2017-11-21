@@ -1,8 +1,8 @@
-package fr.jlm2017.pap.utils;
+package fr.Brainstorm.pap.utils;
 
 /**
  * Created by thoma on 16/03/2017.
- * Project : Porte à Porte pour JLM2017
+ * Project : Porte à Porte pour Brainstorm
  */
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -13,8 +13,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.ClusterItem;
 
-import fr.jlm2017.pap.MongoDB.Porte;
-import fr.jlm2017.pap.R;
+import fr.Brainstorm.pap.MongoDB.Porte;
+import fr.Brainstorm.pap.R;
 
 public class MyMapMarker implements ClusterItem {
     private Porte p;
@@ -27,19 +27,19 @@ public class MyMapMarker implements ClusterItem {
         if(p.ouverte){
             mIcon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                mClusteredIcon = MyMarkerRenderer.writeTextOnDisk(ctx, ctx.getResources().getColor(R.color.JLMgreen,null),"",1);
+                mClusteredIcon = MyMarkerRenderer.writeTextOnDisk(ctx, ctx.getResources().getColor(R.color.Braingreen,null),"",1);
             }
             else {
-                mClusteredIcon = MyMarkerRenderer.writeTextOnDisk(ctx, ctx.getResources().getColor(R.color.JLMgreen),"",1);
+                mClusteredIcon = MyMarkerRenderer.writeTextOnDisk(ctx, ctx.getResources().getColor(R.color.Braingreen),"",1);
             }
         }
         else {
             mIcon= BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                mClusteredIcon = MyMarkerRenderer.writeTextOnDisk(ctx, ctx.getResources().getColor(R.color.JLMred,null),"",1);
+                mClusteredIcon = MyMarkerRenderer.writeTextOnDisk(ctx, ctx.getResources().getColor(R.color.Brainred,null),"",1);
             }
             else {
-                mClusteredIcon = MyMarkerRenderer.writeTextOnDisk(ctx, ctx.getResources().getColor(R.color.JLMred),"",1);
+                mClusteredIcon = MyMarkerRenderer.writeTextOnDisk(ctx, ctx.getResources().getColor(R.color.Brainred),"",1);
             }
         }
     }

@@ -1,4 +1,4 @@
-package fr.jlm2017.pap.Activities;
+package fr.Brainstorm.pap.Activities;
 
 /**
  * Created by thoma on 15/02/2017.
@@ -27,19 +27,19 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
-import fr.jlm2017.pap.utils.ButtonAnimationJLM;
-import fr.jlm2017.pap.MongoDB.Militant;
-import fr.jlm2017.pap.MongoDB.DataObject;
-import fr.jlm2017.pap.MongoDB.DeleteAsyncTask;
-import fr.jlm2017.pap.MongoDB.GetAllAsyncTask;
-import fr.jlm2017.pap.R;
+import fr.Brainstorm.pap.utils.ButtonAnimationBrain;
+import fr.Brainstorm.pap.MongoDB.Militant;
+import fr.Brainstorm.pap.MongoDB.DataObject;
+import fr.Brainstorm.pap.MongoDB.DeleteAsyncTask;
+import fr.Brainstorm.pap.MongoDB.GetAllAsyncTask;
+import fr.Brainstorm.pap.R;
 
 public class supprTab extends Fragment{
 
     ArrayList<Militant> listItems = new ArrayList<>();
     ArrayList<String> listItemsString = new ArrayList<>();
     CircularProgressButton refreshButton;
-    ButtonAnimationJLM refreshButtonAnimation;
+    ButtonAnimationBrain refreshButtonAnimation;
     private Militant user;
     ArrayAdapter<String> adapter;
     public int nbusers;
@@ -60,7 +60,7 @@ public class supprTab extends Fragment{
         adapter = new ArrayAdapter<>(this.getContext(),android.R.layout.simple_selectable_list_item,listItemsString);
         layout.setAdapter(adapter);
         refreshButton = (CircularProgressButton) rootView.findViewById(R.id.refreshButton);
-        refreshButtonAnimation = new ButtonAnimationJLM(refreshButton);
+        refreshButtonAnimation = new ButtonAnimationBrain(refreshButton);
 
         refreshButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

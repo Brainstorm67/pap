@@ -1,11 +1,11 @@
-package fr.jlm2017.pap.MongoDB;
+package fr.Brainstorm.pap.MongoDB;
 
 import android.annotation.SuppressLint;
 import android.util.Pair;
 
 import java.util.ArrayList;
 
-import fr.jlm2017.pap.utils.Encoder;
+import fr.Brainstorm.pap.utils.Encoder;
 
 /**
  * Created by thoma on 14/02/2017.
@@ -19,7 +19,7 @@ public class QueryBuilder {
      * @return String databaseName
      */
     private String getDatabaseName() {
-        return "papjlm";
+        return "papbrain";
     }
 
     /**
@@ -28,7 +28,7 @@ public class QueryBuilder {
      * @return
      */
     private String getApiKey() {
-        return Encoder.decodeString("ccPdsJPdnD-dinB0kFpRz7gBSjf0dMBO5XpaXeS6vG_UOKiHqMSSig==");
+        return Encoder.decodeString("CuvUeEnRQpYHlX88M2WTl7oYKuaS77qguAw4wS8Cqg2qt_2ip8sXzg==");
     }
 
     /**
@@ -128,12 +128,15 @@ public class QueryBuilder {
 
     @SuppressLint("DefaultLocale")
     private String createPorte(Porte contact) {
-        return String
-                .format("{\"porte\"  : {\"adresseResume\": \"%s\", \"complement\": \"%s\",\"nom_rue\": \"%s\",\"nom_ville\": \"%s\",\"numA\": \"%s\",\"numS\": \"%s\", "
-                                + "\"ouverte\": \"%b\", "
-                                + "\"latitude\": \"%f\","
-                                + "\"longitude\": \"%f\", \"person\": \"%s\"}}",
-                        contact.adresseResume, contact.complement, contact.nom_rue, contact.nom_ville, contact.numA, contact.numS, contact.ouverte, contact.latitude, contact.longitude, contact.user_id);
+        String res = String
+                .format("{\"adresseResume\": \"%s\", \"complement\": \"%s\",\"nom_rue\": \"%s\",\"nom_ville\": \"%s\",\"numA\": \"%s\",\"numS\": \"%s\", " +
+                                "\"ouverte\": \"%b\", " +
+                                "\"location\" : { " +
+                                "\"type\" : \"Point\"," +
+                                "\"coordinates\": [%f,%f]}, \"person\": \"%s\"}",
+                        contact.adresseResume, contact.complement, contact.nom_rue, contact.nom_ville, contact.numA, contact.numS, contact.ouverte, contact.longitude, contact.latitude, contact.user_id);
+
+        return res;
     }
 
 
@@ -158,19 +161,23 @@ public class QueryBuilder {
     @SuppressLint("DefaultLocale")
     private String setPorte(Porte contact) {
         return String
-                .format("{\"$set\" : {\"porte\"  : {\"adresseResume\": \"%s\", \"complement\": \"%s\",\"nom_rue\": \"%s\",\"nom_ville\": \"%s\",\"numA\": \"%s\",\"numS\": \"%s\", " +
-                                "                                 \"ouverte\": \"%b\", " +
-                                "                                 \"latitude\": \"%f\"," +
-                                "                                 \"longitude\": \"%f\", \"person\": \"%s\"}}}",
-                        contact.adresseResume, contact.complement, contact.nom_rue, contact.nom_ville, contact.numA, contact.numS, contact.ouverte, contact.latitude, contact.longitude, contact.user_id);
+                .format("{\"adresseResume\": \"%s\", \"complement\": \"%s\",\"nom_rue\": \"%s\",\"nom_ville\": \"%s\",\"numA\": \"%s\",\"numS\": \"%s\", " +
+                                "\"ouverte\": \"%b\", " +
+                                "\"location\" : { " +
+                                "\"type\" : \"Point\"," +
+                                "\"coordinates\": [%f,%f]}, \"person\": \"%s\"}",
+                        contact.adresseResume, contact.complement, contact.nom_rue, contact.nom_ville, contact.numA, contact.numS, contact.ouverte, contact.longitude, contact.latitude, contact.user_id);
     }
 
 
     public String buildProcheURL(Pair<Double, Double> first) {
-        return getBaseUrl() + "portes/?lat=" + first.first + "&lon=" + first.second;
+        return getBaseUrl() + "portes?q={location: { $near: { $geometry: { type: \"Point\",  coordinates: ["+first.second+" , "+ first.first+"] },$maxDistance: 5000 }}}" + "&apiKey=" + getApiKey();
     }
 
-    public String buildGetMyPorteURL(String first) {
-        return getBaseUrl() + "user_porte/?person=" + first;
+    public String buildGetMyPorteURL(String objects, String user_id) { // on donne une collection et des couples id, valeur pour filtrer
+        String res = getBaseUrl() + objects + "?q={";
+        res = res + "\"person\":\"" + user_id + "\"";
+        res = res + "}&apiKey=" + getApiKey();
+        return res;
     }
 }

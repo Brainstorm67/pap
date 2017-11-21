@@ -2,17 +2,16 @@ apply plugin: 'com.android.application'
 
 android {
     signingConfigs {
-        JLMrelease {
-            keyAlias 'JLM2017'
-            keyPassword 'JLM2017'
-            storeFile file('F:/Github/pap/keyFile/keyStoreJLM.jks')
-            storePassword 'insoumis'
-        }
+/*        Brainrelease {
+            keyAlias 'papBrain'
+            keyPassword 'papBrain'
+            storeFile file('G:\\Users\\thoma\\Documents\\GitHub\\PapPerso\\fr.Brainstorm.pap\\keyFile')
+            storePassword 'papBrain'
+        }*/
     }
     compileSdkVersion 25
-    buildToolsVersion "25.0.0"
     defaultConfig {
-        applicationId "fr.jlm2017.pap"
+        applicationId "fr.Brainstorm.pap"
         minSdkVersion 19
         targetSdkVersion 25
         versionCode 1
@@ -22,23 +21,29 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            debuggable false
+            debuggable true
             jniDebuggable false
             renderscriptDebuggable false
-            signingConfig signingConfigs.JLMrelease
+            //signingConfig signingConfigs.Brainrelease
         }
     }
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:25.1.1'
-    compile 'com.squareup.okhttp3:okhttp:3.6.0'
-    compile 'com.android.support:support-v4:25.1.1'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.google.android.gms:play-services-maps:11.4.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    compile 'com.android.support:appcompat-v7:25.4.0'
+    compile 'com.squareup.okhttp3:okhttp:3.7.0'
+    compile 'com.android.support:support-v4:25.4.0'
     compile 'br.com.simplepass:loading-button-android:1.6.1'
-    compile 'com.android.support:design:25.1.1'
+    compile 'com.android.support:design:25.4.0'
     compile 'com.google.code.gson:gson:2.8.0'
+    compile 'com.google.maps.android:android-maps-utils:0.4.+'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
 }

@@ -1,4 +1,4 @@
-package fr.jlm2017.pap.utils;
+package fr.Brainstorm.pap.utils;
 
 import android.util.Base64;
 
@@ -26,7 +26,7 @@ import javax.crypto.spec.PBEKeySpec;
 
 public class Encoder {
 
-    public static String coding = "JLM2017LinsoumiSe";
+    public static String coding = "BrainstormLinsoumiSe";
 
     public static String encode(String password) {
         String res ="";

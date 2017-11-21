@@ -1,4 +1,4 @@
-package fr.jlm2017.pap.GeoLocalisation;
+package fr.Brainstorm.pap.GeoLocalisation;
 
 import com.google.gson.Gson;
 
@@ -25,8 +25,13 @@ class GeoDataWrapper {
                 if(data.components.road==null) {
                     data.components.road="";
                 }
-                if(data.components.city.equals("")&& data.components.village!=null) {
-                    data.components.city=data.components.village;
+                if(data.components.city.equals("")) {
+                    if (data.components.village!=null) {
+                        data.components.city=data.components.village;
+                    }
+                    else if(data.components.town!=null ) {
+                        data.components.city=data.components.town;
+                    }
                 }
             }
             return dw;

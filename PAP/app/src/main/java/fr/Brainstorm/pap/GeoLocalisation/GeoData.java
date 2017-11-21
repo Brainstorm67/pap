@@ -1,8 +1,8 @@
-package fr.jlm2017.pap.GeoLocalisation;
+package fr.Brainstorm.pap.GeoLocalisation;
 
 /**
  * Created by thoma on 23/02/2017.
- * Project : Porte à Porte pour JLM2017
+ * Project : Porte à Porte pour Brainstorm
  */
 
 public class GeoData {
@@ -16,6 +16,7 @@ public class GeoData {
         public String house_number="";
         public String road="";
         public String village="";
+        public String town="";
     }
 
     public class GeoGeometry {
